@@ -5,12 +5,16 @@ import (
 	"net/rpc"
 	"strconv"
 
+	Admin "./admin"
 	Util "./util"
 )
 
 func client() {
 	var opt, result string
-	var args Util.Args
+	var avrg float64
+
+	// init data
+	var args Admin.Args
 
 	// inits server conection
 	c, err := rpc.Dial(Util.PROTOCOL, Util.PORT)
@@ -19,18 +23,22 @@ func client() {
 		return
 	}
 
-	err = c.Call("Admin.Init", nil, &result)
+	err = c.Call("Server.Init", args, &result)
 	if err != nil {
 		fmt.Println(err)
+	} else {
+		fmt.Println("SERVER => " + result)
 	}
 
 	for {
+		fmt.Println("\n------------------------------------")
 		fmt.Println("1) Assign subject grade")
 		fmt.Println("2) Student average grade")
 		fmt.Println("3) General average")
 		fmt.Println("4) Subject general average")
 		fmt.Println("0) Exit")
-		fmt.Scanln(&opt)
+		fmt.Print("\nSelect an option: ")
+		opt = Util.ScanString()
 
 		switch opt {
 		// add new student, grade and subject
@@ -42,23 +50,35 @@ func client() {
 			fmt.Print("Grade: ")
 			args.Grade, _ = strconv.ParseFloat(Util.ScanString(), 64)
 
-			err = c.Call("Admin.Add", args, &result)
+			err = c.Call("Server.Add", args, &result)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("Student data added!")
+				fmt.Println("SERVER => " + result)
 			}
 			break
 		// get student average grade
 		case "2":
 			fmt.Print("Name: ")
-			name := Util.ScanString()
+			args.Name = Util.ScanString()
 
-			err = c.Call("Admin.StudentAverage", name, &result)
+			err = c.Call("Server.StudentAverage", args, &avrg)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("Server.StudentAverage =", result)
+				fmt.Println("SERVER => ", avrg)
+			}
+			break
+		// get subject average grade
+		case "3":
+			fmt.Print("Subject: ")
+			args.Subject = Util.ScanString()
+
+			err = c.Call("Server.SubjectAverage", args, &avrg)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Println("SERVER => ", avrg)
 			}
 			break
 		case "0":

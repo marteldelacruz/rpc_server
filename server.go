@@ -10,7 +10,7 @@ import (
 )
 
 func server() {
-	rpc.Register(new(Admin.Admin))
+	rpc.Register(new(Admin.Server))
 	ln, err := net.Listen(Util.PROTOCOL, Util.PORT)
 	if err != nil {
 		fmt.Println(err)
@@ -21,6 +21,8 @@ func server() {
 			fmt.Println(err)
 			continue
 		}
+
+		fmt.Println("New conection...")
 		go rpc.ServeConn(c)
 	}
 }
