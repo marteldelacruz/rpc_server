@@ -5,18 +5,12 @@ import (
 	"net"
 	"net/rpc"
 
+	Admin "./admin"
 	Util "./util"
 )
 
-type Server struct{}
-
-func (this *Server) Hello(name string, reply *string) error {
-	*reply = "Hello " + name
-	return nil
-}
-
 func server() {
-	rpc.Register(new(Server))
+	rpc.Register(new(Admin.Admin))
 	ln, err := net.Listen(Util.PROTOCOL, Util.PORT)
 	if err != nil {
 		fmt.Println(err)
@@ -34,6 +28,5 @@ func server() {
 func main() {
 	go server()
 
-	var input string
-	fmt.Scanln(&input)
+	Util.ScanString()
 }

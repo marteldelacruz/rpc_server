@@ -10,6 +10,12 @@ const (
 	PORT     = ":9999"
 )
 
+type Args struct {
+	Name    string
+	Subject string
+	Grade   float64
+}
+
 // Scans from the user input and then returns the
 // complete string
 func ScanString() string {
