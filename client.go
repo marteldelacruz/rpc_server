@@ -16,7 +16,10 @@ func client() {
 	}
 
 	for {
-		fmt.Println("1) Hello")
+		fmt.Println("1) Assign subject grade")
+		fmt.Println("2) Student average grade")
+		fmt.Println("3) General average")
+		fmt.Println("4) Subject general average")
 		fmt.Println("0) Exit")
 		fmt.Scanln(&opt)
 
