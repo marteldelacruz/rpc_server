@@ -43,7 +43,7 @@ func client() {
 		switch opt {
 		// add new student, grade and subject
 		case "1":
-			fmt.Print("Subject: ")
+			fmt.Print("\nSubject: ")
 			args.Subject = Util.ScanString()
 			fmt.Print("Name: ")
 			args.Name = Util.ScanString()
@@ -54,36 +54,38 @@ func client() {
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("SERVER => " + result)
+				fmt.Println("SERVER ADD => " + result)
 			}
 			break
 		// get student average grade
 		case "2":
-			fmt.Print("Name: ")
+			fmt.Print("\nName: ")
 			args.Name = Util.ScanString()
 
 			err = c.Call("Server.StudentAverage", args, &avrg)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("SERVER => ", avrg)
+				fmt.Println("SERVER STUDENT AVERAGE => ", avrg)
 			}
 			break
 		// get subject average grade
-		case "3":
-			fmt.Print("Subject: ")
+		case "4":
+			fmt.Print("\nSubject: ")
 			args.Subject = Util.ScanString()
 
 			err = c.Call("Server.SubjectAverage", args, &avrg)
 			if err != nil {
 				fmt.Println(err)
 			} else {
-				fmt.Println("SERVER => ", avrg)
+				fmt.Println("SERVER SUBJECT AVERAGE => ", avrg)
 			}
 			break
 		case "0":
 			return
 		}
+
+		Util.ScanString()
 	}
 }
 

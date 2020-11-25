@@ -28,6 +28,8 @@ func server() {
 }
 
 func main() {
+	fmt.Println("--------------------------------")
+	fmt.Println("SERVER INIT")
 	go server()
 
 	Util.ScanString()
