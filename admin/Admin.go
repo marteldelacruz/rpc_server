@@ -27,16 +27,33 @@ func (server *Server) Init(args *Args, reply *string) error {
 	return nil
 }
 
+// Checks if the student already has a grade for a subject,
+// if so, returns true
+func (server *Server) studentHasGrade(name string, subject string) bool {
+	for s, _ := range (*server).Maps.Student[name] {
+		if s == subject {
+			return true
+		}
+	}
+
+	return false
+}
+
 // Adds a new stutent to the map thing
 func (server *Server) Add(args Args, reply *string) error {
 	// create new student if not exist
 	if (*server).Maps.Student[args.Name] == nil {
 		(*server).Maps.Student[args.Name] = make(map[string]float64)
 	}
+
 	// check if grade is already saved
+	if (*server).studentHasGrade(args.Name, args.Subject) {
+		*reply = "Student already has a grade for that subject"
+		fmt.Println(*reply)
+		return nil
+	}
 	(*server).Maps.Student[args.Name][args.Subject] = args.Grade
 
-	// verificar que la materia no exista antes de reasignar
 	// create new subject
 	if (*server).Maps.Subject[args.Subject] == nil {
 		(*server).Maps.Subject[args.Subject] = make(map[string]float64)
