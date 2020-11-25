@@ -93,14 +93,19 @@ func (server *Server) SubjectAverage(args Args, reply *float64) error {
 }
 
 // Returns the average of all students and subjects
-func (server *Server) GeneralAverage(string, reply *float64) error {
+func (server *Server) GeneralAverage(args Args, reply *float64) error {
+	var total float64
 	*reply = 0
+	fmt.Println("Client ask for general average")
 
-	/**for _, student := range admin.Subject {
-		for _, grade := range admin.Student[student] {
-			avrg += grade
+	for _, subject := range (*server).Maps.Student {
+		for _, g := range subject {
+			*reply += g
+			total += 1
 		}
-	}**/
+	}
+
+	*reply = *reply / total
 
 	return nil
 }

@@ -69,6 +69,15 @@ func client() {
 				fmt.Println("SERVER STUDENT AVERAGE => ", avrg)
 			}
 			break
+		// get general average grades
+		case "3":
+			err = c.Call("Server.GeneralAverage", args, &avrg)
+			if err != nil {
+				fmt.Println(err)
+			} else {
+				fmt.Println("\nSERVER GENERAL AVERAGE => ", avrg)
+			}
+			break
 		// get subject average grade
 		case "4":
 			fmt.Print("\nSubject: ")
